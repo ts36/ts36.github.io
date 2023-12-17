@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $message = $_POST["message"];
 
     // 使用預處理語句插入資料
-    $sql = "INSERT INTO YourTableName (Name, Email, Message) VALUES (?, ?, ?)";
+    $sql = "INSERT INTO Comments (Name, Email, Message) VALUES (?, ?, ?)";
     $params = array($name, $email, $message);
     $stmt = sqlsrv_query($conn, $sql, $params);
 
