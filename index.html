@@ -643,7 +643,7 @@
 						</div>
 					</div>
 					<ul class="actions special">
-						<li><input type="submit" name="submit" id="submit" value="Send Message" /></li>
+						<li><input type="button" name="submit" id="submit" value="Send Message" /></li>
 					</ul>
 					<div id="messageContainer" style="display: none;"></div>
 				</form>
@@ -685,28 +685,33 @@
     <script src="main.js"></script>
 
 	<script>
-       function submitComment() {
-        // 使用 jQuery 發送 POST 請求
-        $.post('post_comment.php', $('#commentForm').serialize(), function(response) {
-            // 在 messageContainer 中顯示提示訊息
-            showMessage(response.status === 'success' ? 'Data inserted successfully!' : 'Error: ' + response.message);
-        }, 'json');
-    }
-
-    function showMessage(message) {
-        // 獲取 messageContainer 元素
-        var messageContainer = $('#messageContainer');
-        // 設置提示訊息
-        messageContainer.text(message);
-        // 顯示 messageContainer 元素
-        messageContainer.show();
-
-        // 在一段時間後隱藏 messageContainer 元素（可選）
-        setTimeout(function() {
-            messageContainer.hide();
-        }, 5000); // 這裡的 5000 是設定為 5 秒，您可以根據需求調整
-    }
-</script>
+		$(document).ready(function() {
+			// 在页面加载完成后执行以下代码
+	
+			// 为提交按钮绑定点击事件
+			$("#submit").click(function() {
+				// 使用 jQuery 发送 POST 请求
+				$.post('post_comment.php', $('#commentForm').serialize(), function(response) {
+					// 在 messageContainer 中显示提示消息
+					showMessage(response.status === 'success' ? 'Data inserted successfully!' : 'Error: ' + response.message);
+				}, 'json');
+			});
+	
+			function showMessage(message) {
+				// 获取 messageContainer 元素
+				var messageContainer = $('#messageContainer');
+				// 设置提示消息
+				messageContainer.text(message);
+				// 显示 messageContainer 元素
+				messageContainer.show();
+	
+				// 在一段时间后隐藏 messageContainer 元素（可选）
+				setTimeout(function() {
+					messageContainer.hide();
+				}, 5000); // 这里的 5000 是设置为 5 秒，您可以根据需求调整
+			}
+		});
+	</script>
 
 
 </body>
