@@ -1,3 +1,5 @@
+
+
 <?php
 $serverName = "travel98.azurewebsites.net";  // 填入您的 SQL Server 伺服器名稱
 $database = "travel";
