@@ -683,6 +683,19 @@
     <!-- 引入主要的 JavaScript 檔案 -->
     <script src="main.js"></script>
 
+	<script>
+        // 假设您使用了 jQuery
+        $.post('post_comment.php', { /* your data here */ }, function(response) {
+            if (response.status === 'success') {
+                // Show success message
+                alert('Data inserted successfully!');
+            } else {
+                // Show error message
+                alert('Error: ' + response.message);
+            }
+        }, 'json');
+    </script>
+
 </body>
 
 </html>
