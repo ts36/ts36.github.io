@@ -692,12 +692,13 @@
 	
 			// 为提交按钮绑定点击事件
 			$("#submit").click(function() {
-				// 使用 jQuery 发送 POST 请求
+				console.log("Button clicked!");  // 添加这行
 				$.post('post_comment.php', $('#commentForm').serialize(), function(response) {
-					// 在 messageContainer 中显示提示消息
+					console.log("Response received:", response);  // 添加这行
 					showMessage(response.status === 'success' ? 'Data inserted successfully!' : 'Error: ' + response.message);
 				}, 'json');
 			});
+
 	
 			function showMessage(message) {
 				// 获取 messageContainer 元素
