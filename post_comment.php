@@ -1,9 +1,8 @@
 <?php
-// 假設你的 MySQL 連線資訊
-$serverName = "travel98.database.windows.net";
+$serverName = "travel98.database.windows.net";  // 填入您的 SQL Server 伺服器名稱
 $database = "travel";
-$uid = "tsouadmin";
-$pass = "Qq0989260287";
+$uid = "tsouadmin";         // 填入您的 SQL Server 使用者名稱
+$pass = "Qq0989260287";         // 填入您的 SQL Server 密碼
 
 $connectionInfo = [
     "Database" => $database,
@@ -12,10 +11,9 @@ $connectionInfo = [
 ];
 $conn = sqlsrv_connect($serverName, $connectionInfo);
 
-
 // 檢查連線是否成功
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+if ($conn === false) {
+    die(print_r(sqlsrv_errors(), true));
 }
 
 // 解析 POST 資料
@@ -27,20 +25,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
     $message = $_POST["message"];
 
-    // 在這裡將資料插入到資料庫
-    $sql = "INSERT INTO YourTableName (Name, Email, Message) VALUES ('$name', '$email', '$message')";
-    $result = $conn->query($sql);
-    
+    // 使用預處理語句插入資料
+    $sql = "INSERT INTO YourTableName (Name, Email, Message) VALUES (?, ?, ?)";
+    $params = array($name, $email, $message);
+    $stmt = sqlsrv_query($conn, $sql, $params);
+
     // 檢查是否成功插入資料
-    if ($result === TRUE) {
-        echo "資料插入成功";
+    if ($stmt === false) {
+        echo "Error: " . print_r(sqlsrv_errors(), true);
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "資料插入成功";
     }
 }
 
 // 關閉連線
-$conn->close();
+sqlsrv_close($conn);
 
 // 回傳成功訊息
 echo json_encode(['status' => 'success']);
