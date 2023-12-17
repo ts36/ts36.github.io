@@ -627,7 +627,7 @@
 		<section class="wrapper style1 align-center">
 			<div class="inner medium">
 				<h2>Get in touch</h2>
-				<form method="post" action="post_comment.php">
+				<form id="commentForm" action="post_comment.php" method="post" >
 					<div class="fields">
 						<div class="field half">
 							<label for="name">Name</label>
@@ -645,6 +645,7 @@
 					<ul class="actions special">
 						<li><input type="submit" name="submit" id="submit" value="Send Message" /></li>
 					</ul>
+					<div id="messageContainer" style="display: none;"></div>
 				</form>
 
 			</div>
@@ -684,19 +685,28 @@
     <script src="main.js"></script>
 
 	<script>
-        // Assuming you are using jQuery
+       function submitComment() {
+        // 使用 jQuery 發送 POST 請求
+        $.post('post_comment.php', $('#commentForm').serialize(), function(response) {
+            // 在 messageContainer 中顯示提示訊息
+            showMessage(response.status === 'success' ? 'Data inserted successfully!' : 'Error: ' + response.message);
+        }, 'json');
+    }
 
-		$.post('post_comment.php', { /* your data here */ }, function(response) {
-    	if (response.status === 'success') {
-        // Show success message using alert
-       	 	alert('Data inserted successfully!');
-    	} else {
-        // Show error message
-        	alert('Error: ' + response.message);
-    	}
-		}, 'json');
+    function showMessage(message) {
+        // 獲取 messageContainer 元素
+        var messageContainer = $('#messageContainer');
+        // 設置提示訊息
+        messageContainer.text(message);
+        // 顯示 messageContainer 元素
+        messageContainer.show();
 
-    </script>
+        // 在一段時間後隱藏 messageContainer 元素（可選）
+        setTimeout(function() {
+            messageContainer.hide();
+        }, 5000); // 這裡的 5000 是設定為 5 秒，您可以根據需求調整
+    }
+</script>
 
 
 </body>
