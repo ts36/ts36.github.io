@@ -1,7 +1,7 @@
 
 
 <?php
-$serverName = "travel98.azurewebsites.net";  // 填入您的 SQL Server 伺服器名稱
+$serverName = "travel98.database.windows.net";  // 填入您的 SQL Server 伺服器名稱
 $database = "travel";
 $uid = "tsouadmin";         // 填入您的 SQL Server 使用者名稱
 $pass = "Qq0989260287";         // 填入您的 SQL Server 密碼
