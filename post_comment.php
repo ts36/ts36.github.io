@@ -21,6 +21,9 @@ if ($conn === false) {
 // 解析 POST 資料
 $data = json_decode(file_get_contents("php://input"));
 
+// 初始化回傳的資料結構
+$response = ['status' => 'success'];
+
 // 取得用戶輸入的留言內容和用戶ID
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST["name"];
@@ -34,18 +37,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // 檢查是否成功插入資料
     if ($stmt === false) {
-        echo "Error: " . print_r(sqlsrv_errors(), true);
-    } else {
-        echo "資料插入成功";
+        $response['status'] = 'error';
+        $response['message'] = 'Error: ' . print_r(sqlsrv_errors(), true);
     }
-    
-    // 結束脚本，只輸出成功消息
-    exit();
 }
 
 // 關閉連線
 sqlsrv_close($conn);
 
-// 回傳成功訊息
-echo json_encode(['status' => 'success']);
+// 輸出 JSON 格式的回傳資料
+header('Content-Type: application/json');
+echo json_encode($response);
 ?>

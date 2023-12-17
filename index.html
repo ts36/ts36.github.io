@@ -683,6 +683,22 @@
     <!-- 引入主要的 JavaScript 檔案 -->
     <script src="main.js"></script>
 
+	<script>
+        // Assuming you are using jQuery
+        $('#commentForm').submit(function(event) {
+            event.preventDefault();
+            $.post('post_comment.php', $(this).serialize(), function(response) {
+                if (response.status === 'success') {
+                    // Show success message
+                    alert('Data inserted successfully!');
+                } else {
+                    // Show error message
+                    alert('Error: ' + response.message);
+                }
+            }, 'json');
+        });
+    </script>
+
 </body>
 
 </html>
