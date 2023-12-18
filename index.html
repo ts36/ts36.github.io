@@ -18,8 +18,15 @@
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	<style>
-        .registration-form {
-            display: none; /* 默认隐藏注册表单 */
+        #loginBox {
+            display: none; /* 默认隐藏登录框 */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         }
     </style>
 </head>
@@ -31,18 +38,20 @@
 		<!-- Banner -->
 		<section
 			class="banner style1 orient-left content-align-left image-position-right fullscreen onload-image-fade-in onload-content-fade-right">
-			<form id="loginForm" action="login_process.php" method="post">
-				<label for="email">Email:</label>
-				<input type="email" id="email" name="email" required>
-				
-				<label for="password">Password:</label>
-				<input type="password" id="password" name="password" required>
-		
-				<input type="submit" value="Login">
-			</form>
-			<input type="button" id="loginButton" value="登入" style="margin: 5px;width: 350px;"/>
+			<button id="showLoginButton">Login</button>
 
-		
+			<!-- 登录框 -->
+			<div id="loginBox">
+				<form action="login_process.php" method="post">
+					<label for="email">Email:</label>
+					<input type="email" id="email" name="email" required>
+					
+					<label for="password">Password:</label>
+					<input type="password" id="password" name="password" required>
+
+					<input type="submit" value="Login">
+				</form>
+			</div>
 			<button id="toggleFormButton">Register</button>
 		
 			<!-- 注册表单 -->
@@ -794,56 +803,10 @@
 			alert(message);
 		}
 	});
-	</script>
 
-<script>
-	// Google Sign-In API 初始化
-	gapi.load('auth2', function() {
-    gapi.auth2.init({
-        client_id: '231540754766-c64d15ska7q6c9qqo9mjf7cjujuoatan.apps.googleusercontent.com'
-    });
-
-    console.log('Google Sign-In API 初始化成功！');
-	});	
-	
-	// 按钮点击事件处理
-	console.log('Before event binding');
-	document.getElementById('GoogleLogIn').addEventListener('click', function() {
-    	console.log('Button clicked!');
-		var auth2 = gapi.auth2.getAuthInstance();
-	
-		auth2.signIn().then(function(googleUser) {
-			// 用户已登录，可以获取用户信息
-			var profile = googleUser.getBasicProfile();
-			console.log('ID: ' + profile.getId());
-			console.log('Full Name: ' + profile.getName());
-			console.log('Email: ' + profile.getEmail());
-	
-			// 在这里将用户信息发送到服务器进行验证
-			$.post('check_user.php', {
-				id: profile.getId(),
-				name: profile.getName(),
-				email: profile.getEmail()
-			}, function(response) {
-				console.log("User information sent to the server. Response:", response);
-				if (response.status === 'success') {
-					// 如果用户验证成功，您可以执行其他操作
-					alert('Google 登录成功！');
-				} else {
-					alert('Google 登录失败。请重试。');
-				}
-			}, 'json');
-		});
-		console.log('After event binding');
-	});
-
-	document.getElementById('toggleFormButton').addEventListener('click', function() {
-            var loginForm = document.getElementById('loginForm');
-            var registrationForm = document.getElementById('registrationForm');
-
-            // 切换可见性
-            loginForm.style.display = loginForm.style.display === 'none' ? 'block' : 'none';
-            registrationForm.style.display = registrationForm.style.display === 'none' ? 'block' : 'none';
+	document.getElementById('showLoginButton').addEventListener('click', function() {
+            var loginBox = document.getElementById('loginBox');
+            loginBox.style.display = 'block';
         });
 	</script>
 	
