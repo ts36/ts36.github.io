@@ -14,6 +14,9 @@
 	<noscript>
 		<link rel="stylesheet" href="assets/css/noscript.css" />
 	</noscript>
+
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
 <body class="is-preload">
@@ -759,6 +762,44 @@
 		}
 	});
 	</script>
+
+<script>
+	// Google Sign-In API 初始化
+	gapi.load('auth2', function() {
+		gapi.auth2.init({
+			client_id: '231540754766-c64d15ska7q6c9qqo9mjf7cjujuoatan.apps.googleusercontent.com' // 替换为您在 Google Cloud Console 中创建的 OAuth 2.0 客户端 ID
+		});
+	});
+	
+	// 按钮点击事件处理
+	document.getElementById('GoogleLogIn').addEventListener('click', function() {
+		var auth2 = gapi.auth2.getAuthInstance();
+	
+		auth2.signIn().then(function(googleUser) {
+			// 用户已登录，可以获取用户信息
+			var profile = googleUser.getBasicProfile();
+			console.log('ID: ' + profile.getId());
+			console.log('Full Name: ' + profile.getName());
+			console.log('Email: ' + profile.getEmail());
+	
+			// 在这里将用户信息发送到服务器进行验证
+			$.post('check_user.php', {
+				id: profile.getId(),
+				name: profile.getName(),
+				email: profile.getEmail()
+			}, function(response) {
+				console.log("User information sent to the server. Response:", response);
+				if (response.status === 'success') {
+					// 如果用户验证成功，您可以执行其他操作
+					alert('Google 登录成功！');
+				} else {
+					alert('Google 登录失败。请重试。');
+				}
+			}, 'json');
+		});
+	});
+	</script>
+	
 
 </body>
 
