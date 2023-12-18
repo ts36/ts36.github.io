@@ -45,6 +45,12 @@
     	margin-top: 10px;  /* 调整取消按钮与上方的间距 */
 		}
 
+		#registerButtonContainer,
+		#returnToLoginButtonContainer {
+			text-align: center;  /* 水平居中对齐 */
+			margin-top: 10px;    /* 调整按钮与上方的间距 */
+		}
+
     </style>
 </head>
 
@@ -67,6 +73,12 @@
 					<input type="password" id="password" name="password" required>
 					
 					<input type="submit" value="Login">
+
+					<!-- 注册按钮 -->
+					<div id="registerButtonContainer">
+						<button id="registerButton">註冊</button>
+					</div>
+
 					<div id="cancelButtonContainer">
 						<button id="cancelButton">取消</button>
 					</div>
@@ -77,17 +89,22 @@
 			<!-- 注册框 -->
 			<div id="registerBox">
 				<form action="register.php" method="post">
-					<!-- 注册表单，根据实际情况调整 -->
 					<label for="registerEmail">Email:</label>
-					<input type="email" id="registerEmail" name="registerEmail" required>
+					<input type="email" id="registerEmail" name="email" required>
 					
 					<label for="registerPassword">Password:</label>
-					<input type="password" id="registerPassword" name="registerPassword" required>
-		
-					<input type="submit" value="Register">
+					<input type="password" id="registerPassword" name="password" required>
+			
+					<input type="submit" value="注册">
+					
+					<!-- 返回登录按钮 -->
+					<div id="returnToLoginButtonContainer">
+						<button id="returnToLoginButton">返回登录</button>
+					</div>
 				</form>
-				<p id="registerMessage"></p>
 			</div>
+			
+
 		
 			
 		
@@ -848,6 +865,18 @@
         // 將用戶名和密碼作為 POST 請求的數據發送
         var data = 'email=' + encodeURIComponent(email) + '&password=' + encodeURIComponent(password);
         xhr.send(data);
+    });
+
+	// 点击注册按钮
+    document.getElementById('registerButton').addEventListener('click', function() {
+        document.getElementById('loginBox').style.display = 'none';
+        document.getElementById('registerBox').style.display = 'block';
+    });
+
+    // 点击返回登录按钮
+    document.getElementById('returnToLoginButton').addEventListener('click', function() {
+        document.getElementById('registerBox').style.display = 'none';
+        document.getElementById('loginBox').style.display = 'block';
     });
 
 	document.getElementById('submit').addEventListener('click', function() {
