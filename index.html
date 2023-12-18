@@ -785,42 +785,63 @@
     <script src="main.js"></script>
 
 	<script>
-	document.getElementById('loginButton').addEventListener('click', function() {
-            var loginBox = document.getElementById('loginBox');
-            loginBox.style.display = 'block';
-        });
+	document.addEventListener('DOMContentLoaded', function() {
+    // 在這裡綁定事件
+    document.getElementById('loginButton').addEventListener('click', function() {
+        var loginBox = document.getElementById('loginBox');
+        loginBox.style.display = 'block';
+    });
+	});
 
-        // 这里添加其他交互逻辑，例如登录成功后的处理
-        // 可以使用 AJAX 或其他方式向后端发送登录请求，并根据返回结果处理
+	function authenticateUser(username, password, callback) {
+    var xhr = new XMLHttpRequest();
+    var url = 'your_backend_authentication_endpoint';  // 將其替換為實際的後端驗證端點
 
-        // 模拟登录成功
-        function simulateLoginSuccess() {
-            var commentForm = document.getElementById('commentForm');
-            commentForm.style.display = 'block';
+    xhr.open('POST', url, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    // 處理伺服器響應
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                callback(response);
+            } else {
+                // 處理錯誤
+                console.error('Authentication failed. Status: ' + xhr.status);
+                callback({ status: 'error', message: 'Authentication failed' });
+            }
         }
+    };
 
-        // 模拟登录失败
-        function simulateLoginFailure() {
-            var loginMessage = document.getElementById('loginMessage');
-            loginMessage.textContent = '登录失败，请重试。';
-        }
+    // 將用戶名和密碼作為 JSON 數據發送到後端
+    var data = {
+        username: username,
+        password: password
+    };
+    xhr.send(JSON.stringify(data));
+}
 
-        document.getElementById('commentForm').addEventListener('submit', function(event) {
-            // 阻止表单提交
-            event.preventDefault();
+// 在提交表單時觸發
+document.addEventListener('submit', function(event) {
+    if (event.target && event.target.id === 'commentForm') {
+        event.preventDefault();
 
-            // 模拟登录成功和失败的情况
-            // 实际中应该根据实际情况发送 AJAX 请求进行验证
-            var username = document.getElementById('loginEmail').value;
-            var password = document.getElementById('loginPassword').value;
+        var username = document.getElementById('loginEmail').value;
+        var password = document.getElementById('loginPassword').value;
 
-            if (username === 'example@example.com' && password === 'password') {
+        // 使用後端驗證用戶
+        authenticateUser(username, password, function(response) {
+            if (response.status === 'success') {
                 simulateLoginSuccess();
             } else {
                 simulateLoginFailure();
             }
         });
-	
+    }
+});
+</script>
+
 
 </body>
 
