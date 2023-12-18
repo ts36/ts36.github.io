@@ -37,19 +37,28 @@
 			display: none;
 		}
 
-		#cancelButtonContainer {
-    	text-align: center;  /* 水平居中对齐 */
+		#cancelButtonContainer,
+		#registerButtonContainer,
+		#returnToLoginButtonContainer {
+			text-align: center;
+			margin-top: 10px;
 		}
 
 		#cancelButton {
-    	margin-top: 10px;  /* 调整取消按钮与上方的间距 */
+			margin-top: 10px;
+			/* 其他取消按钮的样式 */
 		}
 
-		#registerButtonContainer,
-		#returnToLoginButtonContainer {
-			text-align: center;  /* 水平居中对齐 */
-			margin-top: 10px;    /* 调整按钮与上方的间距 */
+		#registerButton {
+			margin-top: 10px;
+			/* 其他注册按钮的样式 */
 		}
+
+		#returnToLoginButton {
+			margin-top: 10px;
+			/* 其他返回登录按钮的样式 */
+		}
+
 
     </style>
 </head>
@@ -94,24 +103,16 @@
 					
 					<label for="registerPassword">Password:</label>
 					<input type="password" id="registerPassword" name="password" required>
-			
-					<input type="submit" value="注册">
+
+					<input type="submit" value="註冊">
 					
 					<!-- 返回登录按钮 -->
 					<div id="returnToLoginButtonContainer">
-						<button id="returnToLoginButton">返回登录</button>
+						<button id="returnToLoginButton">返回登入</button>
 					</div>
 				</form>
 			</div>
-			
 
-		
-			
-		
-
-
-		
-		
 		
 			<div class="content">			
 				<h1>台北美食地圖</h1>
@@ -867,8 +868,7 @@
         xhr.send(data);
     });
 
-	// 点击注册按钮
-    document.getElementById('registerButton').addEventListener('click', function() {
+	document.getElementById('registerButton').addEventListener('click', function() {
         document.getElementById('loginBox').style.display = 'none';
         document.getElementById('registerBox').style.display = 'block';
     });
@@ -883,6 +883,8 @@
         // 显示提示框
         showMessage('Comment submitted successfully!');
     });
+
+
 });
 
 
