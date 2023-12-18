@@ -845,19 +845,25 @@
         xhr.send(data);
     });
 
-
-
+	document.getElementById('submit').addEventListener('click', function() {
+        // 显示提示框
+        showMessage('Comment submitted successfully!');
+    });
 });
 
-document.getElementById('submit').addEventListener('click', function() {
-        // 模拟留言成功
-        simulateCommentSuccess();
-    });
 
-// 模拟留言成功
-function simulateCommentSuccess() {
-    // 显示提示框
-    alert('Comment submitted successfully!');
+function showMessage(message) {
+    // 获取 messageContainer 元素
+    var messageContainer = document.getElementById('messageContainer');
+    // 设置提示消息
+    messageContainer.textContent = message;
+    // 显示 messageContainer 元素
+    messageContainer.style.display = 'block';
+
+    // 在一段时间后隐藏 messageContainer 元素（可选）
+    setTimeout(function() {
+        messageContainer.style.display = 'none';
+    }, 5000); // 这里的 5000 是设置为 5 秒，您可以根据需求调整
 }
 
 </script>
