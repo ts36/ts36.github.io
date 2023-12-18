@@ -785,14 +785,16 @@
     <script src="main.js"></script>
 
 	<script>
-	
-	document.getElementById('loginButton').addEventListener('click', function() {
-		console.log('Login button clicked.');  // 確保這一行被執行
-		var loginBox = document.getElementById('loginBox');
-		loginBox.style.display = 'block';
-	});
 
 	document.addEventListener('DOMContentLoaded', function() {
+	
+	document.getElementById('loginButton').addEventListener('click', function() {
+        console.log('Login button clicked.');  // 在這裡添加一行來檢查是否正確觸發事件
+
+        var loginBox = document.getElementById('loginBox');
+        loginBox.style.display = 'block';
+    });
+
     document.getElementById('loginButton').addEventListener('click', function() {
         var email = document.getElementById('loginEmail').value;
         var password = document.getElementById('loginPassword').value;
