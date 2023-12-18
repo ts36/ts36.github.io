@@ -57,6 +57,7 @@
 		
 					<input type="submit" value="Login">
 				</form>
+				<button id="cancelButton">取消</button>
 			</div>
 
 			<!-- 注册框 -->
@@ -794,6 +795,11 @@
         var loginBox = document.getElementById('loginBox');
         loginBox.style.display = 'block';
     });
+
+	document.getElementById('cancelButton').addEventListener('click', function() {
+                var loginBox = document.getElementById('loginBox');
+                loginBox.style.display = 'none';
+            });
 
     document.getElementById('loginButton').addEventListener('click', function() {
         var email = document.getElementById('loginEmail').value;
