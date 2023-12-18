@@ -38,8 +38,13 @@
 		}
 
 		#cancelButtonContainer {
-            float: right;  /* 可以根據需要調整取消按鈕的對齊方式 */
-        }
+    	text-align: center;  /* 水平居中对齐 */
+		}
+
+		#cancelButton {
+    	margin-top: 10px;  /* 调整取消按钮与上方的间距 */
+		}
+
     </style>
 </head>
 
@@ -60,7 +65,7 @@
 					
 					<label for="password">Password:</label>
 					<input type="password" id="password" name="password" required>
-		
+					
 					<input type="submit" value="Login">
 					<div id="cancelButtonContainer">
 						<button id="cancelButton">取消</button>
