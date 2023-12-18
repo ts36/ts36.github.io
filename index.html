@@ -687,30 +687,43 @@
     <script src="main.js"></script>
 
 	<script>
-		document.getElementById('submit').addEventListener('click', function(event) {
+	document.getElementById('submit').addEventListener('click', function(event) {
 		event.preventDefault();  // 阻止默认提交
 		console.log("Button clicked!");
 
-		$.post('post_comment.php', $('#commentForm').serialize(), function(response) {
-			console.log("Response received:", response);
-			showMessage(response.status === 'success' ? 'Data inserted successfully!' : 'Error: ' + response.message);
-		}, 'json');
+		var formData = new FormData(document.getElementById('commentForm'));
+
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', 'post_comment.php', true);
+		xhr.onload = function() {
+			if (xhr.status === 200) {
+				var response = JSON.parse(xhr.responseText);
+				console.log("Response received:", response);
+				showMessage(response.status === 'success' ? 'Data inserted successfully!' : 'Error: ' + response.message);
+			} else {
+				console.error("Request failed with status:", xhr.status);
+			}
+		};
+		xhr.onerror = function() {
+			console.error("Network error occurred");
+		};
+		xhr.send(formData);
 
 		function showMessage(message) {
 			// 获取 messageContainer 元素
-			var messageContainer = $('#messageContainer');
+			var messageContainer = document.getElementById('messageContainer');
 			// 设置提示消息
-			messageContainer.text(message);
+			messageContainer.textContent = message;
 			// 显示 messageContainer 元素
-			messageContainer.show();
+			messageContainer.style.display = 'block';
 
 			// 在一段时间后隐藏 messageContainer 元素（可选）
 			setTimeout(function() {
-				messageContainer.hide();
+				messageContainer.style.display = 'none';
 			}, 5000); // 这里的 5000 是设置为 5 秒，您可以根据需求调整
 		}
-
 	});
+
 
 	</script>
 
