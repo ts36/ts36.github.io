@@ -844,6 +844,21 @@
         var data = 'email=' + encodeURIComponent(email) + '&password=' + encodeURIComponent(password);
         xhr.send(data);
     });
+
+	function simulateCommentSuccess() {
+    var messageContainer = document.getElementById('messageContainer');
+    messageContainer.textContent = 'Comment submitted successfully!';
+    messageContainer.style.display = 'block';
+
+    // 在一段時間後隱藏 messageContainer 元素（可選）
+    setTimeout(function() {
+        messageContainer.style.display = 'none';
+    }, 5000); // 這裡的 5000 是設置為 5 秒，您可以根據需要調整
+	}
+
+
+
+
 });
 
 </script>
