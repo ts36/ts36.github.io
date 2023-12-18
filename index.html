@@ -18,21 +18,16 @@
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	<style>
-        #loginButton {
-            margin: 5px;
-            width: 350px;
-            position: relative; /* 让按钮成为相对定位的容器 */
-        }
-
         #loginBox {
             display: none;
-            position: absolute; /* 将登录框绝对定位 */
-            top: 100%; /* 将top设置为100%，位于按钮正下方 */
-            left: 50%;
-            transform: translate(-50%, 0);
+            position: fixed;
+            top: 50%;
+            left: 30%;
+            transform: translate(-50%, -50%);
             padding: 20px;
             background-color: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            z-index: 9999; /* 设置更高的 z-index */
         }
     </style>
     </style>
