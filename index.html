@@ -822,8 +822,14 @@
     xhr.send(JSON.stringify(data));
 }
 
+document.getElementById('loginButton').addEventListener('click', function() {
+    console.log('Login button clicked.');  // 確保這一行被執行
+    var loginBox = document.getElementById('loginBox');
+    loginBox.style.display = 'block';
+});
+
 // 在提交表單時觸發
-document.addEventListener('submit', function(event) {
+document.addEventListener('DOMContentLoaded', function(event) {
     if (event.target && event.target.id === 'commentForm') {
         event.preventDefault();
 
