@@ -785,22 +785,19 @@
     <script src="main.js"></script>
 
 	<script>
+	
+	document.getElementById('loginButton').addEventListener('click', function() {
+		console.log('Login button clicked.');  // 確保這一行被執行
+		var loginBox = document.getElementById('loginBox');
+		loginBox.style.display = 'block';
+	});
+
 	document.addEventListener('DOMContentLoaded', function() {
-    // 在這裡綁定事件
-
-document.getElementById('loginButton').addEventListener('click', function() {
-    console.log('Login button clicked.');  // 確保這一行被執行
-    var loginBox = document.getElementById('loginBox');
-    loginBox.style.display = 'block';
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-    // 点击登陆按钮
     document.getElementById('loginButton').addEventListener('click', function() {
         var email = document.getElementById('loginEmail').value;
         var password = document.getElementById('loginPassword').value;
 
-        // 向后端发送登陆请求
+        // 使用 AJAX 向 PHP 文件發送 POST 請求
         var xhr = new XMLHttpRequest();
         xhr.open('POST', 'login.php', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -808,68 +805,24 @@ document.addEventListener('DOMContentLoaded', function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var response = JSON.parse(xhr.responseText);
                 if (response.status === 'success') {
-                    // 登陆成功
+                    // 登入成功
                     document.getElementById('loginBox').style.display = 'none';
-                    document.getElementById('registerBox').style.display = 'none';
                     document.getElementById('commentForm').style.display = 'block';
                 } else {
-                    // 登陆失败，显示注册框
-                    document.getElementById('loginBox').style.display = 'none';
+                    // 登入失敗，顯示錯誤消息
+                    document.getElementById('loginMessage').textContent = '登入失敗，請重試。';
                     document.getElementById('registerBox').style.display = 'block';
+                    document.getElementById('loginBox').style.display = 'none';
                 }
             }
         };
+
+        // 將用戶名和密碼作為 POST 請求的數據發送
         var data = 'email=' + encodeURIComponent(email) + '&password=' + encodeURIComponent(password);
-        xhr.send(data);
-    });
-
-    // 点击注册按钮
-    document.getElementById('registerButton').addEventListener('click', function() {
-        var email = document.getElementById('registerEmail').value;
-        var password = document.getElementById('registerPassword').value;
-
-        // 向后端发送注册请求
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'register.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                var response = JSON.parse(xhr.responseText);
-                if (response.status === 'success') {
-                    // 注册成功，重新登陆
-                    document.getElementById('registerBox').style.display = 'none';
-                    document.getElementById('loginBox').style.display = 'block';
-                }
-            }
-        };
-        var data = 'email=' + encodeURIComponent(email) + '&password=' + encodeURIComponent(password);
-        xhr.send(data);
-    });
-
-    // 提交留言
-    document.getElementById('submit').addEventListener('click', function() {
-        var name = document.getElementById('name').value;
-        var email = document.getElementById('email').value;
-        var message = document.getElementById('message').value;
-
-        // 向后端发送留言请求
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'backend/post_comment.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                var response = JSON.parse(xhr.responseText);
-                if (response.status === 'success') {
-                    // 留言成功，显示提示框
-                    document.getElementById('messageContainer').textContent = 'Comment submitted successfully!';
-                    document.getElementById('messageContainer').style.display = 'block';
-                }
-            }
-        };
-        var data = 'name=' + encodeURIComponent(name) + '&email=' + encodeURIComponent(email) + '&message=' + encodeURIComponent(message);
         xhr.send(data);
     });
 });
+
 </script>
 
 
