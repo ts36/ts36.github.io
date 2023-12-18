@@ -797,16 +797,14 @@
 
 	document.addEventListener('DOMContentLoaded', function() {
 	
-	document.getElementById('loginButton').addEventListener('click', function() {
-        console.log('Login button clicked.');  // 在這裡添加一行來檢查是否正確觸發事件
+		document.getElementById('loginButton').addEventListener('click', function() {
+                var loginBox = document.getElementById('loginBox');
+                loginBox.style.display = 'block';
 
-        var loginBox = document.getElementById('loginBox');
-        loginBox.style.display = 'block';
-
-			// 同時顯示留言區
-        var commentForm = document.getElementById('commentForm');
-        commentForm.style.display = 'block';
-    });
+                // 同時顯示留言區
+                var commentForm = document.getElementById('commentForm');
+                commentForm.style.display = 'block';
+            });
 
 	document.getElementById('cancelButton').addEventListener('click', function() {
                 var loginBox = document.getElementById('loginBox');
