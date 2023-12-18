@@ -802,7 +802,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // 向后端发送登陆请求
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'backend/login.php', true);
+        xhr.open('POST', 'login.php', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
@@ -830,7 +830,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // 向后端发送注册请求
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'backend/register.php', true);
+        xhr.open('POST', 'register.php', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
