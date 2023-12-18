@@ -687,20 +687,14 @@
     <script src="main.js"></script>
 
 	<script>
-		$(document).ready(function() {
-		// 在页面加载完成后执行以下代码
+		document.getElementById('submit').addEventListener('click', function(event) {
+		event.preventDefault();  // 阻止默认提交
+		console.log("Button clicked!");
 
-		// 为提交按钮绑定点击事件
-		$("#submit").click(function(event) {
-			event.preventDefault();  // 阻止默认提交
-
-			console.log("Button clicked!");
-
-			$.post('post_comment.php', $('#commentForm').serialize(), function(response) {
-				console.log("Response received:", response);
-				showMessage(response.status === 'success' ? 'Data inserted successfully!' : 'Error: ' + response.message);
-			}, 'json');
-		});
+		$.post('post_comment.php', $('#commentForm').serialize(), function(response) {
+			console.log("Response received:", response);
+			showMessage(response.status === 'success' ? 'Data inserted successfully!' : 'Error: ' + response.message);
+		}, 'json');
 
 		function showMessage(message) {
 			// 获取 messageContainer 元素
@@ -715,6 +709,7 @@
 				messageContainer.hide();
 			}, 5000); // 这里的 5000 是设置为 5 秒，您可以根据需求调整
 		}
+
 	});
 
 	</script>
