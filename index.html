@@ -854,8 +854,44 @@
     setTimeout(function() {
         messageContainer.style.display = 'none';
     }, 5000); // 這裡的 5000 是設置為 5 秒，您可以根據需要調整
-	}
+}
 
+// 模擬留言失敗
+function simulateCommentFailure() {
+    var messageContainer = document.getElementById('messageContainer');
+    messageContainer.textContent = 'Failed to submit comment. Please try again.';
+    messageContainer.style.display = 'block';
+
+    // 在一段時間後隱藏 messageContainer 元素（可選）
+    setTimeout(function() {
+        messageContainer.style.display = 'none';
+    }, 5000); // 這裡的 5000 是設置為 5 秒，您可以根據需要調整
+}
+
+	function postComment(name, email, message) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'backend/post_comment.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                if (response.status === 'success') {
+                    // 留言成功
+                    simulateCommentSuccess();
+                } else {
+                    // 留言失敗
+                    simulateCommentFailure();
+                }
+            } else {
+                // 留言失敗（可能的其他情況）
+                simulateCommentFailure();
+            }
+        }
+    };
+    var data = 'name=' + encodeURIComponent(name) + '&email=' + encodeURIComponent(email) + '&message=' + encodeURIComponent(message);
+    xhr.send(data);
+}
 
 
 
