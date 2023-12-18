@@ -18,18 +18,22 @@
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	<style>
-        #loginBox {
+        #loginBox, #registerBox {
             display: none;
+            /* 样式设置，可根据需要调整 */
             position: fixed;
-            top: 0; /* 移动到网页的顶部 */
-            left: 0; /* 移动到网页的左侧 */
+            top: 50%;
+            left: 50%;
             transform: translate(-50%, -50%);
             padding: 20px;
             background-color: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
             z-index: 9999;
         }
-    </style>
+
+		#commentForm {
+					display: none;
+				}
     </style>
 </head>
 
@@ -54,6 +58,49 @@
 					<input type="submit" value="Login">
 				</form>
 			</div>
+
+			<!-- 注册框 -->
+			<div id="registerBox">
+				<form action="register_process.php" method="post">
+					<!-- 注册表单，根据实际情况调整 -->
+					<label for="registerEmail">Email:</label>
+					<input type="email" id="registerEmail" name="registerEmail" required>
+					
+					<label for="registerPassword">Password:</label>
+					<input type="password" id="registerPassword" name="registerPassword" required>
+		
+					<input type="submit" value="Register">
+				</form>
+				<p id="registerMessage"></p>
+			</div>
+		
+			<!-- 留言区 -->
+			<div id="commentForm">
+				<form action="post_comment.php" method="post">
+					<!-- 留言表单，根据实际情况调整 -->
+					<div class="fields">
+						<div class="field half">
+							<label for="name">Name</label>
+							<input type="text" name="name" id="name" value="" />
+						</div>
+						<div class="field half">
+							<label for="email">Email</label>
+							<input type="email" name="email" id="email" value="" />
+						</div>
+						<div class="field">
+							<label for="message">Message</label>
+							<textarea name="message" id="message" rows="6"></textarea>
+						</div>
+					</div>
+					<ul class="actions special">
+						<li><input type="button" name="submit" id="submit" value="Send Message" /></li>
+					</ul>
+					<div id="messageContainer" style="display: none;"></div>
+				</form>
+			</div>
+		
+
+
 		
 		
 		
@@ -699,34 +746,7 @@
 			</div>
 		</section>
 
-		<!-- Seven -->
-		<!-- Seven -->
-		<section class="wrapper style1 align-center">
-			<div class="inner medium">
-				<h2>Get in touch</h2>
-				<form id="commentForm" action="post_comment.php" method="post" >
-					<div class="fields">
-						<div class="field half">
-							<label for="name">Name</label>
-							<input type="text" name="name" id="name" value="" />
-						</div>
-						<div class="field half">
-							<label for="email">Email</label>
-							<input type="email" name="email" id="email" value="" />
-						</div>
-						<div class="field">
-							<label for="message">Message</label>
-							<textarea name="message" id="message" rows="6"></textarea>
-						</div>
-					</div>
-					<ul class="actions special">
-						<li><input type="button" name="submit" id="submit" value="Send Message" /></li>
-					</ul>
-					<div id="messageContainer" style="display: none;"></div>
-				</form>
-
-			</div>
-		</section>
+		
 
 		<!-- Footer -->
 		<footer class="wrapper style1 align-center">
@@ -765,38 +785,41 @@
     <script src="main.js"></script>
 
 	<script>
-	document.getElementById('submit').addEventListener('click', function(event) {
-		event.preventDefault();  // 阻止默认提交
-		console.log("Button clicked!");
-
-		var formData = new FormData(document.getElementById('commentForm'));
-
-		var xhr = new XMLHttpRequest();
-		xhr.open('POST', 'post_comment.php', true);
-		xhr.onload = function() {
-			if (xhr.status === 200) {
-				var response = JSON.parse(xhr.responseText);
-				console.log("Response received:", response);
-				showMessage(response.status === 'success' ? '成功繳交!' : 'Error: ' + response.message);
-			} else {
-				console.error("Request failed with status:", xhr.status);
-			}
-		};
-		xhr.onerror = function() {
-			console.error("Network error occurred");
-		};
-		xhr.send(formData);
-
-		function showMessage(message) {
-			alert(message);
-		}
-	});
-
 	document.getElementById('loginButton').addEventListener('click', function() {
             var loginBox = document.getElementById('loginBox');
             loginBox.style.display = 'block';
         });
-	</script>
+
+        // 这里添加其他交互逻辑，例如登录成功后的处理
+        // 可以使用 AJAX 或其他方式向后端发送登录请求，并根据返回结果处理
+
+        // 模拟登录成功
+        function simulateLoginSuccess() {
+            var commentForm = document.getElementById('commentForm');
+            commentForm.style.display = 'block';
+        }
+
+        // 模拟登录失败
+        function simulateLoginFailure() {
+            var loginMessage = document.getElementById('loginMessage');
+            loginMessage.textContent = '登录失败，请重试。';
+        }
+
+        document.getElementById('commentForm').addEventListener('submit', function(event) {
+            // 阻止表单提交
+            event.preventDefault();
+
+            // 模拟登录成功和失败的情况
+            // 实际中应该根据实际情况发送 AJAX 请求进行验证
+            var username = document.getElementById('loginEmail').value;
+            var password = document.getElementById('loginPassword').value;
+
+            if (username === 'example@example.com' && password === 'password') {
+                simulateLoginSuccess();
+            } else {
+                simulateLoginFailure();
+            }
+        });
 	
 
 </body>
