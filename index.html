@@ -34,6 +34,11 @@
 		#commentForm {
 					display: none;
 				}
+
+		#cancelButtonContainer {
+            text-align: right;  /* 可以根據需要調整取消按鈕的對齊方式 */
+            margin-top: 10px;  /* 可以根據需要調整取消按鈕的上邊距 */
+        }
     </style>
 </head>
 
@@ -56,7 +61,9 @@
 					<input type="password" id="password" name="password" required>
 		
 					<input type="submit" value="Login">
-					<button id="cancelButton">取消</button>
+					<div id="cancelButtonContainer">
+						<button id="cancelButton">取消</button>
+					</div>
 				</form>
 				
 			</div>
