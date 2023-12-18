@@ -17,6 +17,11 @@
 
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+	<style>
+        .registration-form {
+            display: none; /* 默认隐藏注册表单 */
+        }
+    </style>
 </head>
 
 <body class="is-preload">
@@ -26,7 +31,33 @@
 		<!-- Banner -->
 		<section
 			class="banner style1 orient-left content-align-left image-position-right fullscreen onload-image-fade-in onload-content-fade-right">
-			<input type="button" id="GoogleLogIn" value="Google登入" style="margin: 5px;width: 350px;"/>
+			<form id="loginForm" action="login_process.php" method="post">
+				<label for="email">Email:</label>
+				<input type="email" id="email" name="email" required>
+				
+				<label for="password">Password:</label>
+				<input type="password" id="password" name="password" required>
+		
+				<input type="submit" value="Login">
+			</form>
+		
+			<button id="toggleFormButton">Register</button>
+		
+			<!-- 注册表单 -->
+			<form id="registrationForm" class="registration-form" action="register_process.php" method="post">
+				<label for="newUsername">Username:</label>
+				<input type="text" id="newUsername" name="newUsername" required>
+				
+				<label for="newPassword">Password:</label>
+				<input type="password" id="newPassword" name="newPassword" required>
+		
+				<label for="newEmail">Email:</label>
+				<input type="email" id="newEmail" name="newEmail" required>
+		
+				<input type="submit" value="Register">
+			</form>
+		
+		
 			<div class="content">			
 				<h1>台北美食地圖</h1>
 				<p class="major">這是一個台北美食推薦網站，右方為 <a
@@ -766,13 +797,17 @@
 <script>
 	// Google Sign-In API 初始化
 	gapi.load('auth2', function() {
-		gapi.auth2.init({
-			client_id: '231540754766-c64d15ska7q6c9qqo9mjf7cjujuoatan.apps.googleusercontent.com' // 替换为您在 Google Cloud Console 中创建的 OAuth 2.0 客户端 ID
-		});
-	});
+    gapi.auth2.init({
+        client_id: '231540754766-c64d15ska7q6c9qqo9mjf7cjujuoatan.apps.googleusercontent.com'
+    });
+
+    console.log('Google Sign-In API 初始化成功！');
+	});	
 	
 	// 按钮点击事件处理
+	console.log('Before event binding');
 	document.getElementById('GoogleLogIn').addEventListener('click', function() {
+    	console.log('Button clicked!');
 		var auth2 = gapi.auth2.getAuthInstance();
 	
 		auth2.signIn().then(function(googleUser) {
@@ -797,7 +832,17 @@
 				}
 			}, 'json');
 		});
+		console.log('After event binding');
 	});
+
+	document.getElementById('toggleFormButton').addEventListener('click', function() {
+            var loginForm = document.getElementById('loginForm');
+            var registrationForm = document.getElementById('registrationForm');
+
+            // 切换可见性
+            loginForm.style.display = loginForm.style.display === 'none' ? 'block' : 'none';
+            registrationForm.style.display = registrationForm.style.display === 'none' ? 'block' : 'none';
+        });
 	</script>
 	
 
